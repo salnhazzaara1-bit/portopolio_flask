@@ -1,0 +1,84 @@
+{% extends 'base.html' %} {% block title %}Hubungi Saya - Portofolio Saya{%
+endblock %} {% block content %}
+<section class="contact-page">
+  <div class="contact-container">
+    <h2>Hubungi Saya</h2>
+    <p class="contact-subtitle">
+      Punya pertanyaan, tawaran kolaborasi, atau sekadar ingin bertegur sapa?
+      Silakan kirimkan pesan Anda melalui formulir di bawah ini.
+    </p>
+
+    <!-- Menampilkan Pesan Flash Sukses / Gagal -->
+    {% with messages = get_flashed_messages(with_categories=true) %} {% if
+    messages %} {% for category, message in messages %}
+    <div class="alert alert-{{ category }}">{{ message }}</div>
+    {% endfor %} {% endif %} {% endwith %}
+
+    <div class="form-wrapper">
+      <form
+        action="{{ url_for('contact') }}"
+        method="POST"
+        class="contact-form"
+      >
+        <div class="form-group">
+          <label for="name">Nama Lengkap</label>
+          <input
+            type="text"
+            id="name"
+            name="name"
+            placeholder="Masukkan nama Anda..."
+            required
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="email">Alamat Email</label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            placeholder="contoh@email.com"
+            required
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="message">Pesan Anda</label>
+          <textarea
+            id="message"
+            name="message"
+            rows="6"
+            placeholder="Tuliskan pesan Anda di sini..."
+            required
+          ></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-submit">Kirim Pesan</button>
+      </form>
+    </div>
+  </div>
+  <!-- INFORMASI KONTAK PEMILIK -->
+  <div class="contact-details-container">
+    <!-- Card Email -->
+    <div class="contact-info-card">
+      <div class="icon-circle">📧</div>
+      <div class="info-text">
+        <h4>Direct Email</h4>
+
+        <!-- Email -->
+        <a href="salnhazza.ara1@gmail.com">salnhazza.ara1@gmail.com</a>
+      </div>
+    </div>
+
+    <!-- Card GitHub -->
+    <div class="contact-info-card">
+      <div class="icon-circle">💻</div>
+      <div class="info-text">
+        <h4>GitHub Profile</h4>
+        <!--  link GitHub  -->
+        <a href="https://github.com/salnhazzaara1-bit" target="_blank">github.com/salnhazzaara1-bit</a>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

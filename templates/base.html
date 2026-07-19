@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{% block title %}Portofolio Saya{% endblock %}</title>
+
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/style.css') }}"
+    />
+    <!-- Google Fonts untuk font modern -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <!-- Navigasi Utama -->
+    <nav class="navbar">
+      <div class="nav-container">
+        <a href="{{ url_for('index') }}" class="nav-logo">MyPortfolio</a>
+        <ul class="nav-links">
+          <li>
+            <a href="{{ url_for('index') }}" class="btn-gradient">Beranda</a>
+          </li>
+          <li>
+            <a href="{{ url_for('about') }}" class="btn-gradient">Tentang</a>
+          </li>
+          <li>
+            <a href="{{ url_for('portfolio') }}" class="btn-gradient"
+              >Portofolio</a
+            >
+          </li>
+          <li>
+            <a href="{{ url_for('contact') }}" class="btn-gradient">Kontak</a>
+          </li>
+
+          <!-- Tambahkan logika login dinamis di sini -->
+          {% if session.get('logged_in') %} {% else %}
+          <li>
+            <a href="{{ url_for('login') }}" class="btn-gradient btn-login"
+              >Login Admin</a
+            >
+          </li>
+          {% endif %}
+        </ul>
+      </div>
+    </nav>
+
+    <!-- Tempat isi konten halaman anak -->
+    <main class="content-wrapper">{% block content %} {% endblock %}</main>
+
+    <!-- Bagian Kaki Halaman -->
+    <footer class="footer">
+      <p>&copy; 2026 Portofolio Digital dan Pengembangan Web.</p>
+    </footer>
+
+    <!-- Hubungkan ke JavaScript Utama -->
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+  </body>
+</html>

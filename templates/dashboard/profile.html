@@ -1,0 +1,502 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Edit Profile - Admin</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Lora:ital,wght@0,500;1,400&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      :root {
+        --bg-main: #0b0f19;
+        --bg-sidebar: #070a10;
+        --bg-card: #131926;
+        --accent-purple: #a855f7;
+        --accent-hover: #c084fc;
+        --text-muted: #64748b;
+        --border-color: #1e293b;
+      }
+
+      body {
+        margin: 0;
+        padding: 0;
+        background-color: var(--bg-main);
+        color: #f8fafc;
+        font-family: "Inter", sans-serif;
+        display: flex;
+        min-height: 100vh;
+      }
+
+      /* SIDEBAR PANEL */
+      .sidebar {
+        width: 260px;
+        background-color: var(--bg-sidebar);
+        border-right: 1px solid var(--border-color);
+        padding: 2rem 1.25rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        box-sizing: border-box;
+      }
+      .brand {
+        font-size: 0.85rem;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        color: var(--text-muted);
+        margin-bottom: 2.5rem;
+        padding-left: 10px;
+      }
+      .nav-group {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+      .nav-label {
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        color: #475569;
+        margin: 1.5rem 0 0.5rem 10px;
+      }
+      .nav-link {
+        display: flex;
+        align-items: center;
+        color: #94a3b8;
+        padding: 12px 14px;
+        border-radius: 8px;
+        text-decoration: none;
+        font-weight: 500;
+        font-size: 0.95rem;
+        transition: all 0.2s;
+      }
+      .nav-link:hover {
+        color: #fff;
+        background: #1e293b;
+      }
+      .nav-link.active {
+        background: var(--accent-purple);
+        color: white;
+        font-weight: 600;
+      }
+      .sidebar-user {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding-top: 1.5rem;
+        border-top: 1px solid var(--border-color);
+        margin-top: auto;
+      }
+      .avatar-circle {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: var(--accent-purple);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        color: white;
+      }
+
+      /* KONTEN UTAMA */
+      .main-content {
+        flex: 1;
+        padding: 3rem 4rem;
+        box-sizing: border-box;
+        max-width: 1000px;
+      }
+
+      .welcome-text h1 {
+        font-family: "Lora", Georgia, serif;
+        font-size: 3rem;
+        font-weight: 500;
+        margin: 0 0 0.5rem 0;
+        color: #ffffff;
+      }
+      .welcome-text p {
+        margin: 0 0 2.5rem 0;
+        color: var(--text-muted);
+        font-size: 1rem;
+      }
+
+      /* FORM MANAGEMENT STYLE */
+      .profile-form {
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+      }
+
+      /* Komponen Upload Foto */
+      .photo-upload-section {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        margin-bottom: 10px;
+      }
+      .current-avatar {
+        width: 90px;
+        height: 90px;
+        border-radius: 12px;
+        object-fit: cover;
+        border: 1px solid var(--border-color);
+        background-color: var(--bg-card);
+      }
+      .upload-instructions h4 {
+        margin: 0 0 4px 0;
+        font-size: 1rem;
+        color: #ffffff;
+      }
+      .upload-instructions p {
+        margin: 0 10px 0 0;
+        font-size: 0.85rem;
+        color: var(--text-muted);
+      }
+      .file-input-wrapper {
+        margin-top: 8px;
+        display: flex;
+        gap: 12px;
+        align-items: center;
+      }
+      .btn-upload-label {
+        font-size: 0.85rem;
+        color: var(--accent-hover);
+        cursor: pointer;
+        font-weight: 500;
+      }
+      .btn-upload-label:hover {
+        text-decoration: underline;
+      }
+
+      /* Baris Input Sejajar */
+      .input-row {
+        display: flex;
+        gap: 20px;
+      }
+      .input-group {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+      .input-group label {
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        color: var(--text-muted);
+        font-weight: 600;
+      }
+      .form-control {
+        background-color: var(--bg-card);
+        border: 1px solid var(--border-color);
+        border-radius: 6px;
+        padding: 12px 16px;
+        color: #ffffff;
+        font-family: "Inter", sans-serif;
+        font-size: 0.95rem;
+        box-sizing: border-box;
+        width: 100%;
+        transition: border-color 0.2s;
+      }
+      .form-control:focus {
+        outline: none;
+        border-color: var(--accent-purple);
+      }
+
+      /* Kolon Tag */
+      .skills-container {
+        background-color: var(--bg-card);
+        border: 1px solid var(--border-color);
+        border-radius: 8px;
+        padding: 14px;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        align-items: center;
+      }
+      .skill-tag {
+        background-color: #1e293b;
+        color: #cbd5e1;
+        font-size: 0.85rem;
+        padding: 6px 12px;
+        border-radius: 20px;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        border: 1px solid #334155;
+      }
+      .skill-tag a {
+        color: #ef4444;
+        text-decoration: none;
+        font-weight: bold;
+        font-size: 0.75rem;
+      }
+      .add-skill-input {
+        background: transparent;
+        border: none;
+        color: #ffffff;
+        font-size: 0.85rem;
+        padding: 6px;
+        outline: none;
+        flex: 1;
+        min-width: 150px;
+      }
+
+      /* 4. Aksi Tombol di Bawah */
+      .form-actions {
+        display: flex;
+        gap: 12px;
+        margin-top: 1.5rem;
+        border-top: 1px solid var(--border-color);
+        padding-top: 1.5rem;
+      }
+      .btn-submit {
+        background-color: var(--accent-purple);
+        color: #ffffff;
+        border: none;
+        padding: 12px 24px;
+        border-radius: 6px;
+        font-size: 0.9rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background 0.2s;
+      }
+      .btn-submit:hover {
+        background-color: var(--accent-hover);
+      }
+      .btn-cancel {
+        background-color: transparent;
+        color: #f8fafc;
+        border: 1px solid var(--border-color);
+        padding: 12px 24px;
+        border-radius: 6px;
+        font-size: 0.9rem;
+        font-weight: 500;
+        text-decoration: none;
+        transition: background 0.2s;
+      }
+      .btn-cancel:hover {
+        background-color: #1e293b;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- SIDEBAR PANEL -->
+    <div class="sidebar">
+      <div>
+        <div class="brand">Active Session</div>
+
+        <div class="nav-group">
+          <div class="nav-label">Core</div>
+          <a href="{{ url_for('dashboard') }}" class="nav-link">○ Dashboard</a>
+          <a href="{{ url_for('manage_projects') }}" class="nav-link"
+            >○ Work / Projects</a
+          >
+          <a href="{{ url_for('manage_messages') }}" class="nav-link"
+            >○ Contact / Inbox</a
+          >
+          <a href="#" class="nav-link active">● About & Skills</a>
+        </div>
+
+        <div class="nav-group">
+          <div class="nav-label">Preferences</div>
+          <a href="{{ url_for('index') }}" target="_blank" class="nav-link"
+            >↗ Live Site</a
+          >
+        </div>
+      </div>
+
+      <div class="sidebar-user">
+        <div class="avatar-circle">AD</div>
+        <div class="user-info">
+          <p style="margin: 0; font-size: 0.9rem; font-weight: 600">
+            Administrator
+          </p>
+          <a
+            href="{{ url_for('logout') }}"
+            style="
+              color: #ef4444;
+              text-decoration: none;
+              font-size: 0.75rem;
+              font-weight: bold;
+            "
+            >Sign Out</a
+          >
+        </div>
+      </div>
+    </div>
+
+    <!-- HALAMAN KONTEN UTAMA -->
+    <div class="main-content">
+      <div class="welcome-text">
+        <h1>Edit Profile</h1>
+        <p>
+          Kelola visibilitas publik Anda dan sesuaikan data pencapaian
+          portofolio utama.
+        </p>
+      </div>
+
+      <!-- Flash Alert -->
+      {% with messages = get_flashed_messages() %} {% if messages %} {% for msg
+      in messages %}
+      <div style="color: #22c55e; font-weight: bold; margin-bottom: 1.5rem">
+        {{ msg }}
+      </div>
+      {% endfor %} {% endif %} {% endwith %}
+
+      <!-- FORM UTAMA EDIT PROFIL -->
+      <form
+        action="{{ url_for('manage_profile') }}"
+        method="POST"
+        enctype="multipart/form-data"
+        class="profile-form"
+      >
+        <!-- Unggah Foto Profil -->
+        <div class="photo-upload-section">
+          {% if profile and profile.avatar %}
+          <img
+            src="{{ url_for('static', filename='uploads/' ~ profile.avatar) }}"
+            class="current-avatar"
+            alt="Avatar"
+          />
+          {% else %}
+          <div
+            class="current-avatar"
+            style="
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              color: var(--text-muted);
+              font-size: 0.8rem;
+            "
+          >
+            No Photo
+          </div>
+          {% endif %}
+
+          <div class="upload-instructions">
+            <h4>Profile Photo</h4>
+            <p>
+              Unggah pasfoto profesional formal Anda. Ukuran rekomendasi:
+              400x400px.
+            </p>
+            <div class="file-input-wrapper">
+              <input
+                type="file"
+                name="avatar"
+                id="avatar-file"
+                style="display: none"
+                onchange="
+                  document.getElementById('file-name-label').innerText =
+                    this.files[0].name
+                "
+              />
+              <label for="avatar-file" class="btn-upload-label"
+                >Pilih File Foto</label
+              >
+              <span
+                id="file-name-label"
+                style="font-size: 0.8rem; color: var(--text-muted)"
+                >Belum ada berkas dipilih</span
+              >
+            </div>
+          </div>
+        </div>
+
+        <!-- Nama Lengkap & Headline Profesional Sejajar -->
+        <div class="input-row">
+          <div class="input-group">
+            <label for="full_name">Full Name</label>
+            <input
+              type="text"
+              id="full_name"
+              name="name"
+              class="form-control"
+              value="{{ profile.name if profile else '' }}"
+              placeholder="Contoh: Alexander Vance"
+              required
+            />
+          </div>
+          <div class="input-group">
+            <label for="headline">Professional Headline</label>
+            <input
+              type="text"
+              id="headline"
+              name="headline"
+              class="form-control"
+              value="{{ profile.headline if profile else '' }}"
+              placeholder="Contoh: Undergraduate Student in Computer Science"
+            />
+          </div>
+        </div>
+
+        <!-- Deskripsi Tentang Saya -->
+        <div class="input-group">
+          <label for="about">About Description</label>
+          <textarea
+            id="about"
+            name="about_text"
+            class="form-control"
+            rows="5"
+            placeholder="Tulis deskripsi diri Anda di sini..."
+          >
+{{ profile.about_text if profile else '' }}</textarea
+          >
+        </div>
+
+        <!-- Blok Manajemen Kata Kunci Skills -->
+        <div class="input-group">
+          <label>Skills & Expertise</label>
+          <span
+            style="
+              font-size: 0.8rem;
+              color: var(--text-muted);
+              margin-bottom: 4px;
+            "
+            >Tekan Enter atau gunakan koma (,) untuk memisahkan daftar keahlian
+            Anda.</span
+          >
+
+          <div class="skills-container">
+            <!-- Menampilkan List Tag jika ada data skill -->
+            {% if profile and profile.skills %} {% for skill in
+            profile.skills.split(',') %} {% if skill.strip() %}
+            <div class="skill-tag">
+              {{ skill.strip() }}
+              
+              <a
+                href="#"
+                onclick="
+                  this.parentElement.remove();
+                  return false;
+                "
+                >×</a
+              >
+            </div>
+            {% endif %} {% endfor %} {% endif %}
+
+            <input
+              type="text"
+              name="skills"
+              class="add-skill-input"
+              value="{{ profile.skills if profile else '' }}"
+              placeholder="Tambah keahlian (contoh: Python, Java, CSS)..."
+            />
+          </div>
+        </div>
+
+        <!-- Tombol Aksi Simpan / Batal -->
+        <div class="form-actions">
+          <button type="submit" name="update_profile" class="btn-submit">
+            Save Changes
+          </button>
+          <a href="{{ url_for('dashboard') }}" class="btn-cancel">Cancel</a>
+        </div>
+      </form>
+    </div>
+  </body>
+</html>

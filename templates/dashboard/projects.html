@@ -1,0 +1,463 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Project Management - Admin</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Lora:ital,wght@0,500;1,400&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      :root {
+        --bg-main: #0b0f19;
+        --bg-sidebar: #070a10;
+        --bg-card: #131926;
+        --accent-purple: #a855f7;
+        --accent-hover: #c084fc;
+        --text-muted: #64748b;
+        --border-color: #1e293b;
+      }
+
+      body {
+        margin: 0;
+        padding: 0;
+        background-color: var(--bg-main);
+        color: #f8fafc;
+        font-family: "Inter", sans-serif;
+        display: flex;
+        min-height: 100vh;
+      }
+
+      /* SIDEBAR PANEL */
+      .sidebar {
+        width: 260px;
+        background-color: var(--bg-sidebar);
+        border-right: 1px solid var(--border-color);
+        padding: 2rem 1.25rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        box-sizing: border-box;
+      }
+      .brand {
+        font-size: 0.85rem;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        color: var(--text-muted);
+        margin-bottom: 2.5rem;
+        padding-left: 10px;
+      }
+      .nav-group {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+      .nav-label {
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        color: #475569;
+        margin: 1.5rem 0 0.5rem 10px;
+      }
+      .nav-link {
+        display: flex;
+        align-items: center;
+        color: #94a3b8;
+        padding: 12px 14px;
+        border-radius: 8px;
+        text-decoration: none;
+        font-weight: 500;
+        font-size: 0.95rem;
+        transition: all 0.2s;
+      }
+      .nav-link:hover {
+        color: #fff;
+        background: #1e293b;
+      }
+      .nav-link.active {
+        background: var(--accent-purple);
+        color: white;
+        font-weight: 600;
+      }
+      .sidebar-user {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding-top: 1.5rem;
+        border-top: 1px solid var(--border-color);
+        margin-top: auto;
+      }
+      .avatar-circle {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: var(--accent-purple);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        color: white;
+      }
+
+      /* KONTEN UTAMA */
+      .main-content {
+        flex: 1;
+        padding: 3rem 4rem;
+        box-sizing: border-box;
+        max-width: 1200px;
+      }
+
+      /* HEADER AREA */
+      .top-section {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-bottom: 2.5rem;
+      }
+      .welcome-text h1 {
+        font-family: "Lora", Georgia, serif;
+        font-size: 3rem;
+        font-weight: 500;
+        margin: 0 0 1rem 0;
+        color: #ffffff;
+      }
+      .welcome-text p {
+        margin: 0;
+        color: #94a3b8;
+        font-size: 1.05rem;
+        line-height: 1.6;
+        max-width: 600px;
+      }
+
+      .btn-add {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 12px 24px;
+        border-radius: 8px;
+        font-size: 0.9rem;
+        font-weight: 600;
+        text-decoration: none;
+        background-color: var(--accent-purple);
+        color: white;
+        border: none;
+        transition: all 0.2s;
+        cursor: pointer;
+      }
+      .btn-add:hover {
+        background-color: var(--accent-hover);
+      }
+
+      /* TABEL PROYEK GAYA MODERN */
+      .table-container {
+        background-color: var(--bg-card);
+        border: 1px solid var(--border-color);
+        border-radius: 14px;
+        padding: 1.5rem;
+        box-sizing: border-box;
+        margin-bottom: 3rem;
+      }
+
+      .project-table {
+        width: 100%;
+        border-collapse: collapse;
+        text-align: left;
+      }
+
+      .project-table th {
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        color: var(--text-muted);
+        padding: 12px 16px;
+        border-bottom: 1px solid var(--border-color);
+      }
+
+      .project-table td {
+        padding: 20px 16px;
+        border-bottom: 1px solid #1e293b;
+        vertical-align: middle;
+      }
+
+      .project-table tr:last-child td {
+        border-bottom: none;
+      }
+
+      /* ELEMEN DI DALAM TABEL */
+      .project-info {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+      }
+
+      .project-img {
+        width: 50px;
+        height: 50px;
+        border-radius: 6px;
+        object-fit: cover;
+        background-color: #0b0f19;
+        border: 1px solid var(--border-color);
+      }
+
+      .project-title {
+        font-size: 1.05rem;
+        font-weight: 600;
+        color: #ffffff;
+        margin: 0 0 4px 0;
+      }
+
+      .project-desc {
+        font-size: 0.85rem;
+        color: var(--text-muted);
+        margin: 0;
+      }
+
+      /* Badge Teknologi */
+      .tech-tags {
+        display: flex;
+        gap: 6px;
+        flex-wrap: wrap;
+      }
+
+      .tag {
+        font-size: 0.7rem;
+        font-weight: 600;
+        background-color: #1e293b;
+        color: #94a3b8;
+        padding: 4px 8px;
+        border-radius: 4px;
+        text-transform: uppercase;
+      }
+
+      /* Tombol Aksi */
+      .action-cell {
+        display: flex;
+        gap: 16px;
+      }
+
+      .action-btn {
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 0;
+        font-size: 0.9rem;
+        font-weight: 500;
+        text-decoration: none;
+        transition: color 0.2s;
+      }
+
+      .btn-edit {
+        color: #38bdf8;
+      }
+      .btn-edit:hover {
+        color: #7dd3fc;
+      }
+      .btn-delete {
+        color: #f43f5e;
+      }
+      .btn-delete:hover {
+        color: #fda4af;
+      }
+
+      /* (Bagian Bawah Referensi) */
+      .quote-box {
+        border-left: 2px solid var(--accent-purple);
+        padding-left: 1.5rem;
+        margin-top: 2rem;
+      }
+      .quote-text {
+        font-family: "Lora", Georgia, serif;
+        font-size: 1.35rem;
+        font-style: italic;
+        color: #e2e8f0;
+        margin: 0 0 0.5rem 0;
+        line-height: 1.5;
+      }
+      .quote-author {
+        font-size: 0.85rem;
+        color: var(--text-muted);
+        margin: 0;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- SIDEBAR PANEL (SISI KIRI) -->
+    <div class="sidebar">
+      <div>
+        <div class="brand">Active Session</div>
+
+        <div class="nav-group">
+          <div class="nav-label">Core</div>
+          <a href="{{ url_for('dashboard') }}" class="nav-link">○ Dashboard</a>
+          <a href="#" class="nav-link active">● Work / Projects</a>
+          <a href="{{ url_for('manage_messages') }}" class="nav-link"
+            >○ Contact / Inbox</a
+          >
+          <a href="{{ url_for('manage_profile') }}" class="nav-link"
+            >○ About & Skills</a
+          >
+        </div>
+
+        <div class="nav-group">
+          <div class="nav-label">Preferences</div>
+          <a href="{{ url_for('index') }}" target="_blank" class="nav-link"
+            >↗ Live Site</a
+          >
+        </div>
+      </div>
+
+      <div class="sidebar-user">
+        <div class="avatar-circle">AD</div>
+        <div class="user-info">
+          <p style="margin: 0; font-size: 0.9rem; font-weight: 600">
+            Administrator
+          </p>
+          <a
+            href="{{ url_for('logout') }}"
+            style="
+              color: #ef4444;
+              text-decoration: none;
+              font-size: 0.75rem;
+              font-weight: bold;
+            "
+            >Sign Out</a
+          >
+        </div>
+      </div>
+    </div>
+
+    <!-- HALAMAN KONTEN UTAMA (SISI KANAN) -->
+    <div class="main-content">
+      <!-- Header Atas -->
+      <div class="top-section">
+        <div class="welcome-text">
+          <h1>Project Management</h1>
+          <p>
+            Kelola, perbarui, dan kurasi semua proyek mahakarya digital Anda
+            yang akan ditampilkan langsung di galeri arsip utama.
+          </p>
+        </div>
+        <!-- Tombol Tambah Proyek -->
+        <a href="{{ url_for('add_project') }}" class="btn-add"
+          >+ Tambah Proyek Baru</a
+        >
+      </div>
+
+      <!-- Flash Alert -->
+      {% with messages = get_flashed_messages(with_categories=true) %} {% if
+      messages %} {% for category, message in messages %}
+      <div style="color: #22c55e; font-weight: bold; margin-bottom: 1.5rem">
+        {{ message }}
+      </div>
+      {% endfor %} {% endif %} {% endwith %}
+
+      <!-- WIDGET TABEL UTAMA -->
+      <div class="table-container">
+        <table class="project-table">
+          <thead>
+            <tr>
+              <th style="width: 55%">Title</th>
+              <th style="width: 25%">Technology</th>
+              <th style="width: 20%; text-align: right; padding-right: 24px">
+                Actions
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {% if projects %} {% for project in projects %}
+            <tr>
+              <td>
+                <div class="project-info">
+                  <!-- Thumbnail Proyek -->
+                  {% if project.image %}
+                  <img
+                    src="{{ url_for('static', filename='uploads/' ~ project.image) }}"
+                    class="project-img"
+                    alt=""
+                  />
+                  {% else %}
+                  <div
+                    class="project-img"
+                    style="
+                      display: flex;
+                      align-items: center;
+                      justify-content: center;
+                      color: #475569;
+                      font-size: 0.75rem;
+                    "
+                  >
+                    No Img
+                  </div>
+                  {% endif %}
+                  <div>
+                    <h3 class="project-title">{{ project.title }}</h3>
+                    <p class="project-desc">
+                      {{ project.description[:60] }}{% if
+                      project.description|length > 60 %}...{% endif %}
+                    </p>
+                  </div>
+                </div>
+              </td>
+              <td>
+                <div class="tech-tags">
+                  <!-- Untuk mengubah string teknologi koma menjadi badge terpisah -->
+                  {% for tech in project.technologies.split(',') %}
+                  <span class="tag">{{ tech.strip() }}</span>
+                  {% endfor %}
+                </div>
+              </td>
+              <td style="text-align: right; padding-right: 24px">
+                <div class="action-cell" style="justify-content: flex-end">
+                  <a
+                    href="{{ url_for('edit_project', id=project.id) }}"
+                    class="action-btn btn-edit"
+                    >Ubah</a
+                  >
+                  <form
+                    action="{{ url_for('delete_project', id=project.id) }}"
+                    method="POST"
+                    style="display: inline"
+                    onsubmit="return confirm('Hapus proyek {{ project.title }}?');"
+                  >
+                    <button type="submit" class="action-btn btn-delete">
+                      Hapus
+                    </button>
+                  </form>
+                </div>
+              </td>
+            </tr>
+            {% endfor %} {% else %}
+            <tr>
+              <td
+                colspan="3"
+                style="
+                  text-align: center;
+                  color: var(--text-muted);
+                  padding: 3rem 0;
+                "
+              >
+                Belum ada karya proyek yang ditambahkan.
+              </td>
+            </tr>
+            {% endif %}
+          </tbody>
+        </table>
+      </div>
+
+      <!-- BLOK KATA  -->
+      <div class="quote-box">
+        <p class="quote-text">
+          "Coding is formalized curiosity. It is poking and prying with a
+          purpose."
+        </p>
+        <p class="quote-author">— Adapted Dev Axiom</p>
+      </div>
+    </div>
+  </body>
+</html>

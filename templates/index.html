@@ -1,0 +1,56 @@
+{% extends 'base.html' %} {% block title %}Beranda - Portofolio Saya{% endblock
+%} {% block content %}
+<section class="hero-section">
+  <div class="hero-container">
+    <!-- ELEMEN KIRI: Bagian Teks Nama dan Deskripsi -->
+    <div class="hero-text">
+      <!-- NAMA (Dinamis) -->
+      <h1>
+        Halo, Saya
+        <span
+          >{{ profile.name if profile and profile.name else "SALSABILA
+          NURMARDIYAH AZ'ZAHRA" }}</span
+        >
+      </h1>
+
+      <!-- STATUS/HEADLINE (Dinamis) -->
+      <p class="headline">
+        {{ profile.headline if profile and profile.headline else "Mahasiswa IT &
+        Web Developer" }}
+      </p>
+
+      <!-- INTRO TEXT (Dinamis) -->
+      <p class="intro-text">
+        {{ profile.about_text if profile and profile.about_text else "Selamat
+        datang di portfolio saya! Di sini, kamu akan menemukan perjalanan saya
+        dalam mengeksplorasi dunia pemrograman dan desain digital." }}
+      </p>
+
+      <div class="hero-buttons">
+        <a href="{{ url_for('portfolio') }}" class="btn btn-primary"
+          >Lihat Proyek</a
+        >
+        <a href="{{ url_for('contact') }}" class="btn btn-secondary"
+          >Hubungi Saya</a
+        >
+      </div>
+    </div>
+
+    <div class="hero-avatar">
+      {% if profile and profile.avatar %}
+      <!-- Jika ada foto di database, tampilkan foto hasil upload -->
+      <img
+        src="{{ url_for('static', filename='uploads/' ~ profile.avatar) }}"
+        alt="Foto Profil {{ profile.name }}"
+      />
+      {% else %}
+      <!-- Jika database kosong, tampilkan foto default placeholder -->
+      <img
+        src="{{ url_for('static', filename='uploads/avatar.jpeg') }}"
+        alt="Foto Profil Default"
+      />
+      {% endif %}
+    </div>
+  </div>
+</section>
+{% endblock %}

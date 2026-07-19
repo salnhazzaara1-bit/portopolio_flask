@@ -1,0 +1,365 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard Admin</title>
+    <!-- Menggunakan font Georgia untuk teks sambutan klasik dan Inter untuk UI modern -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Lora:ital,wght@0,500;1,400&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      :root {
+        --bg-main: #0b0f19;         /* Latar belakang utama */
+        --bg-sidebar: #070a10;      /* Latar belakang sidebar */
+        --bg-card: #131926;         /* Latar belakang kartu */
+        --accent-purple: #a855f7;   /* Warna aksen utama */
+        --accent-hover: #c084fc;    /* Warna hover aksen */
+        --text-muted: #64748b;      /* Warna teks sekunder */
+        --border-color: #1e293b;    /* Warna garis pembatas */
+      }
+
+      body {
+        margin: 0;
+        padding: 0;
+        background-color: var(--bg-main);
+        color: #f8fafc;
+        font-family: "Inter", sans-serif;
+        display: flex;
+        min-height: 100vh;
+      }
+
+      /* SIDEBAR STYLE */
+      .sidebar {
+        width: 260px;
+        background-color: var(--bg-sidebar);
+        border-right: 1px solid var(--border-color);
+        padding: 2rem 1.25rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        box-sizing: border-box;
+      }
+
+      .brand {
+        font-size: 0.85rem;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        color: var(--text-muted);
+        margin-bottom: 2.5rem;
+        padding-left: 10px;
+      }
+
+      .nav-group {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+
+      .nav-label {
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        color: #475569;
+        margin: 1.5rem 0 0.5rem 10px;
+      }
+
+      .nav-link {
+        display: flex;
+        align-items: center;
+        color: #94a3b8;
+        padding: 12px 14px;
+        border-radius: 8px;
+        text-decoration: none;
+        font-weight: 500;
+        font-size: 0.95rem;
+        transition: all 0.2s ease;
+      }
+
+      .nav-link:hover {
+        color: #fff;
+        background: #1e293b;
+      }
+
+      .nav-link.active {
+        background: var(--accent-purple);
+        color: white;
+        font-weight: 600;
+      }
+
+      /* USER PROFILE BLOCK */
+      .sidebar-user {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding-top: 1.5rem;
+        border-top: 1px solid var(--border-color);
+        margin-top: auto;
+      }
+      .avatar-circle {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: var(--accent-purple);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        color: white;
+      }
+      .user-info p {
+        margin: 0;
+        font-size: 0.9rem;
+        font-weight: 600;
+      }
+      .user-info span {
+        font-size: 0.75rem;
+        color: var(--text-muted);
+      }
+
+      /* MAIN CONTENT STYLE */
+      .main-content {
+        flex: 1;
+        padding: 3rem 4rem;
+        box-sizing: border-box;
+        max-width: 1200px;
+      }
+
+      /* TOP SECTION (Welcome & Buttons) */
+      .top-section {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-bottom: 3rem;
+      }
+
+      .welcome-text {
+        max-width: 600px;
+      }
+
+      /* Font Lora */
+      .welcome-text h1 {
+        font-family: "Lora", Georgia, serif;
+        font-size: 3rem;
+        font-weight: 500;
+        margin: 0 0 1rem 0;
+        line-height: 1.1;
+        color: #ffffff;
+      }
+
+      .welcome-text p {
+        margin: 0;
+        color: #94a3b8;
+        font-size: 1.05rem;
+        line-height: 1.6;
+      }
+
+      .action-buttons {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 10px 20px;
+        border-radius: 6px;
+        font-size: 0.9rem;
+        font-weight: 500;
+        text-decoration: none;
+        cursor: pointer;
+        transition: all 0.2s;
+        box-sizing: border-box;
+        min-width: 160px;
+      }
+
+      .btn-primary {
+        background-color: var(--accent-purple);
+        color: white;
+        border: none;
+      }
+      .btn-primary:hover {
+        background-color: var(--accent-hover);
+      }
+
+      .btn-secondary {
+        background-color: transparent;
+        color: #f8fafc;
+        border: 1px solid var(--border-color);
+      }
+      .btn-secondary:hover {
+        background-color: #1e293b;
+      }
+
+      /* GRID KARTU STATISTIK */
+      .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 20px;
+        margin-bottom: 2.5rem;
+      }
+
+      .card {
+        background-color: var(--bg-card);
+        border: 1px solid var(--border-color);
+        border-radius: 12px;
+        padding: 1.5rem;
+        box-sizing: border-box;
+      }
+
+      .card-title {
+        font-size: 0.85rem;
+        color: var(--text-muted);
+        margin: 0 0 1rem 0;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+
+      .card-value {
+        font-size: 2.25rem;
+        font-weight: 600;
+        margin: 0;
+        color: #ffffff;
+      }
+
+      /* AREA VISUALISASI / PREVIEW JUMBO */
+      .visual-showcase {
+        background-color: var(--bg-card);
+        border: 1px solid var(--border-color);
+        border-radius: 16px;
+        height: 280px;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        padding: 2rem;
+        box-sizing: border-box;
+        background-image:
+          linear-gradient(to top, rgba(11, 15, 25, 0.9), rgba(11, 15, 25, 0)),
+          url("{{ url_for('static', filename='uploads/avatar.jpeg') }}");
+        background-size: cover;
+        background-position: center;
+      }
+
+      .showcase-title {
+        font-size: 1.1rem;
+        font-weight: 600;
+        margin: 0 0 0.25rem 0;
+      }
+      .showcase-desc {
+        font-size: 0.9rem;
+        color: var(--text-muted);
+        margin: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- SIDEBAR PANEL -->
+    <div class="sidebar">
+      <div>
+        <div class="brand">Active Session</div>
+
+        <div class="nav-group">
+          <div class="nav-label">Core</div>
+          <a href="#" class="nav-link active">● Dashboard</a>
+          <a href="{{ url_for('manage_projects') }}" class="nav-link"
+            >○ Work / Projects</a
+          >
+          <a href="{{ url_for('manage_messages') }}" class="nav-link"
+            >○ Contact / Inbox</a
+          >
+          <a href="{{ url_for('manage_profile') }}" class="nav-link"
+            >○ About & Skills</a
+          >
+        </div>
+
+        <div class="nav-group">
+          <div class="nav-label">Preferences</div>
+          <a href="{{ url_for('index') }}" target="_blank" class="nav-link"
+            >↗ Live Site</a
+          >
+        </div>
+      </div>
+
+      <!-- Bagian Pengguna di Kiri Bawah -->
+      <div class="sidebar-user">
+        <div class="avatar-circle">AD</div>
+        <div class="user-info">
+          <p>Administrator</p>
+          <a
+            href="{{ url_for('logout') }}"
+            style="
+              color: #ef4444;
+              text-decoration: none;
+              font-size: 0.75rem;
+              font-weight: bold;
+            "
+            >Sign Out</a
+          >
+        </div>
+      </div>
+    </div>
+
+    <!-- Halaman Konten Utama -->
+    <div class="main-content">
+      <!-- Baris Sambutan & Tombol Aksi Cepat -->
+      <div class="top-section">
+        <div class="welcome-text">
+          <h1>Welcome back,<br />Admin.</h1>
+          <p>
+            Kelola portofolio digital Anda dengan mudah. Anda memiliki beberapa
+            pesan baru di kotak masuk yang menunggu tanggapan.
+          </p>
+        </div>
+
+        <div class="action-buttons">
+          <a href="{{ url_for('manage_projects') }}" class="btn btn-primary"
+            >+ Add Project</a
+          >
+          <a href="{{ url_for('manage_messages') }}" class="btn btn-secondary"
+            >View Inbox</a
+          >
+        </div>
+      </div>
+
+      <!-- Kartu Ringkasan Angka Utama -->
+      <div class="stats-grid">
+        <div class="card">
+          <h3 class="card-title">Total Projects</h3>
+          <p class="card-value">{{ total_projects }}</p>
+        </div>
+        <div class="card">
+          <h3 class="card-title">Unread Messages</h3>
+          <p class="card-value">{{ unread_messages }}</p>
+        </div>
+        <div class="card">
+          <h3 class="card-title">Storage Status</h3>
+          <p
+            class="card-value"
+            style="font-size: 1.75rem; padding-top: 8px; color: #22c55e"
+          >
+            Optimal
+          </p>
+        </div>
+        <div class="card">
+          <h3 class="card-title">System Engine</h3>
+          <p
+            class="card-value"
+            style="
+              font-size: 1.75rem;
+              padding-top: 8px;
+              color: var(--accent-purple);
+            "
+          >
+            Flask v3
+          </p>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

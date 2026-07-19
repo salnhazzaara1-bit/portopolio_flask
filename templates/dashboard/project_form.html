@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ action }} Proyek - Admin</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+        .form-container { background: #1e1b4b; border: 1px solid #a855f7; padding: 2.5rem; border-radius: 12px; margin-top: 1.5rem; }
+        .form-group { margin-bottom: 1.25rem; }
+        .form-group label { display: block; margin-bottom: 0.5rem; color: #94a3b8; }
+        .form-group input, .form-group textarea { width: 100%; padding: 10px; border-radius: 6px; border: 1px solid #334155; background: #0f172a; color: #fff; box-sizing: border-box; }
+        .form-group textarea { height: 120px; resize: vertical; }
+        .form-group input:focus, .form-group textarea:focus { outline: none; border-color: #a855f7; }
+        .btn-submit { background: #a855f7; color: white; padding: 12px 20px; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; }
+    </style>
+</head>
+<body style="padding: 2rem; background-color: #0f172a; color: #f8fafc;">
+    <div style="max-width: 800px; margin: 0 auto;">
+        
+        <div>
+            <a href="{{ url_for('manage_projects') }}" style="color: #a855f7; text-decoration: none;">← Kembali ke Daftar Proyek</a>
+            <h2 style="margin-top: 1rem;">{{ action }} <span>Proyek</span></h2>
+        </div>
+
+        <!-- Flash Message Alert -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+            {% for category, message in messages %}
+              <div style="color: #ef4444; margin-bottom: 1rem;">{{ message }}</div>
+            {% endfor %}
+          {% endif %}
+        {% endwith %}
+
+        <div class="form-container">
+            
+            <form method="POST" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="title">Judul Proyek</label>
+                    <input type="text" id="title" name="title" value="{{ project.title if project else '' }}" required placeholder="Contoh: Website Animasi Tata Surya">
+                </div>
+                
+                <div class="form-group">
+                    <label for="technology">Teknologi / Bahasa Pemrograman</label>
+                    <input type="text" id="technology" name="technology" value="{{ project.technology if project else '' }}" required placeholder="Contoh: HTML5, CSS3 3D, Flask, SQLite">
+                </div>
+
+                <div class="form-group">
+                    <label for="link">Link Demo Proyek (Opsional)</label>
+                    <input type="url" id="link" name="link" value="{{ project.link if project else '' }}" placeholder="Contoh: https://github.com/username/project">
+                </div>
+
+                <div class="form-group">
+                    <label for="image">Gambar Proyek (Maksimal 5MB)</label>
+                    <input type="file" id="image" name="image" {{ 'required' if action == 'Tambah' else '' }}>
+                    {% if project %}
+                        <p style="font-size: 0.85rem; color: #94a3b8; margin-top: 0.5rem;">Gambar saat ini: <span style="color: #a855f7;">{{ project.image }}</span></p>
+                    {% endif %}
+                </div>
+
+                <div class="form-group">
+                    <label for="description">Deskripsi Lengkap Proyek</label>
+                    <textarea id="description" name="description" required placeholder="Jelaskan detail proyek, fitur utama, dan proses pembuatannya...">{{ project.description if project else '' }}</textarea>
+                </div>
+
+                <button type="submit" class="btn-submit">{{ action }} Simpan Proyek</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
