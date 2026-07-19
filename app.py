@@ -22,11 +22,7 @@ def index():
     profile = Profile.query.first()
     return render_template('index.html', profile=profile)
 
-@app.route('/about')
-def about():
-    profile = Profile.query.first()
-    skills = Skill.query.all()
-    return render_template('about.html', profile=profile, skills=skills)
+
 
 @app.route('/portfolio')
 def portfolio():
@@ -70,5 +66,48 @@ if __name__ == '__main__':
             )
             db.session.add(default_profile)
             db.session.commit()
-            
-    app.run(debug=True)
+        
+        
+class Education(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    institution = db.Column(db.String(100), nullable=False) # Nama Sekolah/Kampus
+    degree = db.Column(db.String(100), nullable=False)      # Jurusan/Gelar
+    duration = db.Column(db.String(50), nullable=False)     # Tahun (Contoh: "2025 - Sekarang")
+    description = db.Column(db.Text, nullable=True)         # Keterangan tambahan
+
+class Skill(db.Model):
+    # Tambahkan baris ini tepat di bawah nama class (perhatikan indentasi spasi/tab-nya)
+    __table_args__ = {'extend_existing': True}
+    
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(50), nullable=False)
+
+# 2. Update Route Halaman About
+@app.route('/about')
+def about():
+    # Deskripsi diri lengkap
+    profile_desc = (
+        "Halo! Nama saya Salsabila Nurmardiyah Az'Zahra. Saat ini saya sedang menempuh "
+        "perjalanan akademis sebagai mahasiswa di bidang Teknologi Informasi. Fokus utama saya "
+        "adalah mengeksplorasi dunia pemrograman dan pengembangan web (web development). "
+        "Saya memiliki ketertarikan yang besar dalam membangun antarmuka web yang interaktif, "
+        "estetik, dan responsif."
+    )
+    
+    # Mengambil data dari database secara dinamis
+    education_history = Education.query.order_by(Education.id.desc()).all()
+    skills_list = Skill.query.all()
+    
+    # Kirim data ke file HTML
+    return render_template('about.html', 
+                           description=profile_desc, 
+                           educations=education_history, 
+                           skills=skills_list)
+    
+if __name__ == '__main__':
+    # Membuka konteks aplikasi Flask agar db.create_all() bisa berjalan aman
+            with app.app_context():
+               db.create_all() # Ini akan otomatis membuat tabel education & skill jika belum ada
+        
+            app.run(debug=True)        
+    
