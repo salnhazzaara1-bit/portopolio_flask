@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{% block title %}Portofolio Saya{% endblock %}</title>
+    <!-- Hubungkan ke CSS Utama kita nanti -->
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/style.css') }}"
+    />
+    <!-- Google Fonts untuk font modern -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <!-- Navigasi Utama -->
+    <nav class="navbar">
+      <div class="nav-container">
+        <a href="{{ url_for('index') }}" class="nav-logo">MyPortfolio</a>
+        <ul class="nav-links">
+          <li><a href="{{ url_for('index') }}">Beranda</a></li>
+          <li><a href="{{ url_for('about') }}">Tentang</a></li>
+          <li><a href="{{ url_for('portfolio') }}">Portofolio</a></li>
+          <li><a href="{{ url_for('contact') }}">Kontak</a></li>
+        </ul>
+      </div>
+    </nav>
+
+    <!-- Tempat isi konten halaman anak (child template) akan muncul otomatis -->
+    <main class="content-wrapper">{% block content %} {% endblock %}</main>
+
+    <!-- Bagian Kaki Halaman -->
+    <footer class="footer">
+      <p>&copy; 2026 Portofolio Saya. Dibuat dengan Flask Versi Terbaru.</p>
+    </footer>
+
+    <!-- Hubungkan ke JavaScript Utama -->
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+  </body>
+</html>

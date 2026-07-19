@@ -1,0 +1,52 @@
+{% extends 'base.html' %} {% block title %}{{ project.title }} - Detail Proyek{%
+endblock %} {% block content %}
+<section class="project-detail-page">
+  <div class="detail-container">
+    <a href="{{ url_for('portfolio') }}" class="btn-back"
+      >&larr; Kembali ke Portofolio</a
+    >
+
+    <h1 class="detail-title">{{ project.title }}</h1>
+    <p class="detail-date">
+      Dibuat pada: {{ project.created_at.strftime('%d %B %Y') }}
+    </p>
+
+    <div class="detail-img">
+      <img
+        src="{{ url_for('static', filename='uploads/' + project.image_file) }}"
+        alt="{{ project.title }}"
+      />
+    </div>
+
+    <div class="detail-info">
+      <div class="detail-tech-stack">
+        <strong>Teknologi yang Digunakan:</strong>
+        <span class="tech-tag">{{ project.technologies }}</span>
+      </div>
+
+      <div class="detail-description">
+        <h3>Deskripsi Proyek</h3>
+        <p>{{ project.description }}</p>
+      </div>
+
+      <div class="detail-actions">
+        {% if project.github_link %}
+        <a
+          href="{{ project.github_link }}"
+          target="_blank"
+          class="btn btn-git-large"
+          >Lihat Source Code (GitHub)</a
+        >
+        {% endif %} {% if project.live_link %}
+        <a
+          href="{{ project.live_link }}"
+          target="_blank"
+          class="btn btn-live-large"
+          >Lihat Demo Live</a
+        >
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

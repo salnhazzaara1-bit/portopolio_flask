@@ -1,0 +1,43 @@
+{% extends 'base.html' %} {% block title %}Beranda - Portofolio Saya{% endblock
+%} {% block content %}
+<section class="hero-section">
+  <div class="hero-container">
+    <!-- Menampilkan foto profil default jika belum diganti -->
+    <div class="hero-avatar">
+      {% if profile and profile.avatar %}
+      <img
+        src="{{ url_for('static', filename='uploads/' + profile.avatar) }}"
+        alt="Avatar"
+      />
+      {% else %}
+      <img
+        src="{{ url_for('static', filename='uploads/default_avatar.png') }}"
+        alt="Avatar Default"
+      />
+      {% endif %}
+    </div>
+
+    <div class="hero-text">
+      <h1>
+        Halo, Saya <span>{{ profile.name if profile else 'Nama Anda' }}</span>
+      </h1>
+      <p class="headline">
+        {{ profile.headline if profile else 'IT Student & Web Developer' }}
+      </p>
+      <p class="intro-text">
+        Selamat datang di website portofolio digital saya. Di sini Anda dapat
+        melihat ringkasan keahlian, riwayat pengerjaan proyek, dan cara
+        menghubungi saya untuk kolaborasi.
+      </p>
+      <div class="hero-buttons">
+        <a href="{{ url_for('portfolio') }}" class="btn btn-primary"
+          >Lihat Proyek</a
+        >
+        <a href="{{ url_for('contact') }}" class="btn btn-secondary"
+          >Hubungi Saya</a
+        >
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}
