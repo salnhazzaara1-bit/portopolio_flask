@@ -37,15 +37,11 @@
           <li>
             <a href="{{ url_for('contact') }}" class="btn-gradient">Kontak</a>
           </li>
-
-          <!-- Tambahkan logika login dinamis di sini -->
-          {% if session.get('logged_in') %} {% else %}
           <li>
             <a href="{{ url_for('login') }}" class="btn-gradient btn-login"
               >Login Admin</a
             >
           </li>
-          {% endif %}
         </ul>
       </div>
     </nav>
