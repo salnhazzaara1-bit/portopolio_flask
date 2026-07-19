@@ -1,43 +1,49 @@
-{% extends 'base.html' %} {% block title %}Beranda - Portofolio Saya{% endblock
-%} {% block content %}
+{% extends 'base.html' %}
+
+{% block title %}Beranda - Portofolio Saya{% endblock %}
+
+{% block content %}
 <section class="hero-section">
   <div class="hero-container">
-    <!-- Menampilkan foto profil default jika belum diganti -->
+
+    <!-- ELEMEN KIRI: Bagian Teks Nama dan Deskripsi -->
+    <div class="hero-text">
+      <!-- NAMA -->
+      <h1>Halo, Saya <span>SALSABILA NURMARDIYAH AZ'ZAHRA</span></h1>
+      <!-- STATUS/HEADLINE  -->
+      <p class="headline">Mahasiswa IT & Web Developer</p>
+      <!-- GANTI KATA-KATA SAMBUTAN -->
+      <p class="intro-text">
+        Selamat datang di portfolio saya! Di sini, kamu akan menemukan
+        perjalanan saya dalam mengeksplorasi dunia pemrograman dan desain
+        digital. Saya percaya bahwa setiap tantangan adalah kesempatan untuk
+        berkembang. Portfolio ini adalah bukti dari dedikasi saya untuk terus
+        belajar, mencoba hal baru, dan mengasah keterampilan. Let’s connect and
+        create something cool together ✨
+      </p>
+      
+      <div class="hero-buttons">
+        <a href="{{ url_for('portfolio') }}" class="btn btn-primary">Lihat Proyek</a>
+        <a href="{{ url_for('contact') }}" class="btn btn-secondary">Hubungi Saya</a>
+      </div>
+    </div>
+
+    
     <div class="hero-avatar">
       {% if profile and profile.avatar %}
+      <img
+        src="{{ url_for('static', filename='uploads/avatar.jpeg') }}"
+        alt="Foto Profil Salsabila"
+        
+      />
+      {% else %}
       <img
         src="{{ url_for('static', filename='uploads/' + profile.avatar) }}"
         alt="Avatar"
       />
-      {% else %}
-      <img
-        src="{{ url_for('static', filename='uploads/default_avatar.png') }}"
-        alt="Avatar Default"
-      />
       {% endif %}
     </div>
 
-    <div class="hero-text">
-      <h1>
-        Halo, Saya <span>{{ profile.name if profile else 'Nama Anda' }}</span>
-      </h1>
-      <p class="headline">
-        {{ profile.headline if profile else 'IT Student & Web Developer' }}
-      </p>
-      <p class="intro-text">
-        Selamat datang di website portofolio digital saya. Di sini Anda dapat
-        melihat ringkasan keahlian, riwayat pengerjaan proyek, dan cara
-        menghubungi saya untuk kolaborasi.
-      </p>
-      <div class="hero-buttons">
-        <a href="{{ url_for('portfolio') }}" class="btn btn-primary"
-          >Lihat Proyek</a
-        >
-        <a href="{{ url_for('contact') }}" class="btn btn-secondary"
-          >Hubungi Saya</a
-        >
-      </div>
-    </div>
   </div>
 </section>
 {% endblock %}

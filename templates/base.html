@@ -23,10 +23,10 @@
       <div class="nav-container">
         <a href="{{ url_for('index') }}" class="nav-logo">MyPortfolio</a>
         <ul class="nav-links">
-          <li><a href="{{ url_for('index') }}">Beranda</a></li>
-          <li><a href="{{ url_for('about') }}">Tentang</a></li>
-          <li><a href="{{ url_for('portfolio') }}">Portofolio</a></li>
-          <li><a href="{{ url_for('contact') }}">Kontak</a></li>
+          <li><a href="{{ url_for('index') }}" class="btn-gradient">Beranda</a></li>
+          <li><a href="{{ url_for('about') }}" class="btn-gradient">Tentang</a></li>
+          <li><a href="{{ url_for('portfolio') }}" class="btn-gradient">Portofolio</a></li>
+          <li><a href="{{ url_for('contact') }}" class="btn-gradient">Kontak</a></li>
         </ul>
       </div>
     </nav>
@@ -42,4 +42,5 @@
     <!-- Hubungkan ke JavaScript Utama -->
     <script src="{{ url_for('static', filename='js/main.js') }}"></script>
   </body>
+  
 </html>
