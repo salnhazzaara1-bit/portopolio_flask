@@ -301,3 +301,16 @@ if __name__ == '__main__':
             db.session.commit()
             
     app.run(debug=True)
+    with app.app_context():
+    # Membuat database otomatis secara aman
+            db.create_all()
+    
+    # Membuat data profil default jika kosong
+    if Profile.query.first() is None:
+        default_profile = Profile(
+            name="NAMA KAMU",
+            headline="IT Student & Web Developer",
+            about_text="Halo! Selamat datang di web portofolio saya."
+        )
+        db.session.add(default_profile)
+        db.session.commit()
